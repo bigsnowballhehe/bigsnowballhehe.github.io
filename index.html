@@ -147,6 +147,77 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://bigsnowballhehe.github.io/2021/05/25/this/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ZWei Wu">
+      <meta itemprop="description" content="雪球的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snfzi">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/25/this/" class="post-title-link" itemprop="url">词法作用域与'上下文'this的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-05-25 17:21:13 / Modified: 09:30:54" itemprop="dateCreated datePublished" datetime="2021-05-25T17:21:13+00:00">2021-05-25</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>许多开发人员经常混淆作用域和执行上下文的概念，误认为它们是相同的概念，但事实并非如此。</p>
+<p>我们知道 JavaScript 属于解释型语言，JavaScript 的执行分为：解释和执行两个阶段,这两个阶段所做的事并不一样：</p>
+<ul>
+<li>解释阶段：  </li>
+</ul>
+<p>1.词法分析<br>2.语法分析<br>3.作用域规则确定  </p>
+<ul>
+<li>执行阶段：  </li>
+</ul>
+<p>1.创建执行上下文<br>2.执行函数代码<br>3.垃圾回收  </p>
+<p>1.JavaScript 解释阶段便会确定作用域规则，因此作用域在函数定义时就已经确定了，而不是在函数调用时确定，但是执行上下文是函数执行之前创建的。执行上下文最明显的就是 this 的指向是执行时确定的。而作用域访问的变量是编写代码的结构确定的。</p>
+<p>2.作用域和执行上下文之间最大的区别是：<br>执行上下文在运行时确定，随时可能改变；作用域在定义时就确定，并且不会改变。</p>
+<p>3.一个作用域下可能包含若干个上下文环境。有可能从来没有过上下文环境（函数从来就没有被调用过）；有可能有过，现在函数被调用完毕后，上下文环境被销毁了；有可能同时存在一个或多个（闭包）。同一个作用域下，不同的调用会产生不同的执行上下文环境，继而产生不同的变量的值。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://bigsnowballhehe.github.io/2021/05/07/vue3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,10 +241,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-05-07 19:52:43 / Modified: 11:59:22" itemprop="dateCreated datePublished" datetime="2021-05-07T19:52:43+00:00">2021-05-07</time>
+              <time title="Created: 2021-05-07 19:52:43" itemprop="dateCreated datePublished" datetime="2021-05-07T19:52:43+00:00">2021-05-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+              </span>
 
           
 
@@ -229,10 +306,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-05-07 16:22:46 / Modified: 11:59:22" itemprop="dateCreated datePublished" datetime="2021-05-07T16:22:46+00:00">2021-05-07</time>
+              <time title="Created: 2021-05-07 16:22:46" itemprop="dateCreated datePublished" datetime="2021-05-07T16:22:46+00:00">2021-05-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+              </span>
 
           
 
@@ -297,7 +380,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-07 11:59:22" itemprop="dateModified" datetime="2021-05-07T11:59:22+00:00">2021-05-07</time>
+                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
               </span>
 
           
@@ -364,7 +447,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-07 11:59:22" itemprop="dateModified" datetime="2021-05-07T11:59:22+00:00">2021-05-07</time>
+                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
               </span>
 
           
@@ -430,7 +513,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-07 11:59:22" itemprop="dateModified" datetime="2021-05-07T11:59:22+00:00">2021-05-07</time>
+                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
               </span>
 
           
@@ -500,7 +583,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-07 11:59:22" itemprop="dateModified" datetime="2021-05-07T11:59:22+00:00">2021-05-07</time>
+                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
               </span>
 
           
@@ -567,7 +650,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-07 11:59:22" itemprop="dateModified" datetime="2021-05-07T11:59:22+00:00">2021-05-07</time>
+                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
               </span>
 
           
@@ -667,12 +750,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
