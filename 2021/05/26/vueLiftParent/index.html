@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"bigsnowballhehe.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="毕业设计项目： 1..后台用的百度人脸识别API，node+express+mongodb 2.前台 vue+antd 比较简单的前台，后台有些数据啥的就没放上来了.. 链接：bigsnowballhehe&#x2F;FaceId_front: 学习百度api (github.com)">
+  <meta name="description" content="今天面试被问到一个问题,之前都没遇见过,问父子组件生命周期加载顺序,把我整懵了.  答案1.加载渲染过程父beforeCreate-&gt;父created-&gt;父beforeMount-&gt;子beforeCreate-&gt;子created-&gt;子beforeMount- &gt;子mounted-&gt;父mounted 2.子组件更新过程父beforeUpdate-&gt;子b">
 <meta property="og:type" content="article">
-<meta property="og:title" content="人脸识别考勤项目介绍---毕业设计">
-<meta property="og:url" content="https://bigsnowballhehe.github.io/2021/04/26/myfirst/index.html">
+<meta property="og:title" content="Vue父子组件生命周期加载顺序&#x2F;mutation和action">
+<meta property="og:url" content="https://bigsnowballhehe.github.io/2021/05/26/vueLiftParent/index.html">
 <meta property="og:site_name" content="Snfzi">
-<meta property="og:description" content="毕业设计项目： 1..后台用的百度人脸识别API，node+express+mongodb 2.前台 vue+antd 比较简单的前台，后台有些数据啥的就没放上来了.. 链接：bigsnowballhehe&#x2F;FaceId_front: 学习百度api (github.com)">
+<meta property="og:description" content="今天面试被问到一个问题,之前都没遇见过,问父子组件生命周期加载顺序,把我整懵了.  答案1.加载渲染过程父beforeCreate-&gt;父created-&gt;父beforeMount-&gt;子beforeCreate-&gt;子created-&gt;子beforeMount- &gt;子mounted-&gt;父mounted 2.子组件更新过程父beforeUpdate-&gt;子b">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-04-26T16:21:00.000Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200903160917803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDcyMDg2,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2021-05-26T18:37:56.000Z">
 <meta property="article:modified_time" content="2021-05-26T11:28:54.537Z">
 <meta property="article:author" content="ZWei Wu">
 <meta property="article:tag" content="-Vue">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200903160917803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDcyMDg2,size_16,color_FFFFFF,t_70">
 
-<link rel="canonical" href="https://bigsnowballhehe.github.io/2021/04/26/myfirst/">
+<link rel="canonical" href="https://bigsnowballhehe.github.io/2021/05/26/vueLiftParent/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>人脸识别考勤项目介绍---毕业设计 | Snfzi</title>
+  <title>Vue父子组件生命周期加载顺序/mutation和action | Snfzi</title>
   
 
 
@@ -151,7 +153,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://bigsnowballhehe.github.io/2021/04/26/myfirst/">
+    <link itemprop="mainEntityOfPage" href="https://bigsnowballhehe.github.io/2021/05/26/vueLiftParent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +166,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          人脸识别考勤项目介绍---毕业设计
+          Vue父子组件生命周期加载顺序/mutation和action
         </h1>
 
         <div class="post-meta">
@@ -173,16 +175,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-04-26 16:21:00" itemprop="dateCreated datePublished" datetime="2021-04-26T16:21:00+00:00">2021-04-26</time>
+              <time title="Created: 2021-05-26 18:37:56 / Modified: 11:28:54" itemprop="dateCreated datePublished" datetime="2021-05-26T18:37:56+00:00">2021-05-26</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
-              </span>
 
           
 
@@ -195,11 +191,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>毕业设计项目：</p>
-<p>1..后台用的百度人脸识别API，node+express+mongodb</p>
-<p>2.前台 vue+antd</p>
-<p>比较简单的前台，后台有些数据啥的就没放上来了..</p>
-<p>链接：<a target="_blank" rel="noopener" href="https://github.com/bigsnowballhehe/FaceId_front">bigsnowballhehe/FaceId_front: 学习百度api (github.com)</a></p>
+        <p>今天面试被问到一个问题,之前都没遇见过,问父子组件生命周期加载顺序,把我整懵了. </p>
+<h2 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h2><p><strong>1.加载渲染过程</strong><br>父beforeCreate-&gt;父created-&gt;父beforeMount-&gt;子beforeCreate-&gt;子created-&gt;子beforeMount- &gt;子mounted-&gt;父mounted</p>
+<p><strong>2.子组件更新过程</strong><br>父beforeUpdate-&gt;子beforeUpdate-&gt;子updated-&gt;父updated</p>
+<p><strong>3.父组件更新过程</strong><br>父beforeUpdate-&gt;父updated</p>
+<p><strong>4.销毁过程</strong><br>父beforeDestroy-&gt;子beforeDestroy-&gt;子destroyed-&gt;父destroyed</p>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>组件的调用顺序都是先父后子,渲染完成的顺序肯定是先子后父</p>
+<p>组件的销毁操作是先父后子，销毁完成的顺序是先子后父</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul>
+<li><p>当dom渲染时，会createElm创建元素，创建元素后会进行初始化，初始化组件的时候内部还有组件，会不停的去渲染，所以它的渲染顺序是先父后子，完成的顺序是先子后父。</p>
+</li>
+<li><p>dom渲染描述：先父组件要创建beforeCreate、created，父组件实例化完成后要挂载这个父组件beforeMount，挂载父组件的时候会调用父的render方法，渲染的时候发现里面有子组件，这时就会调用子组件的beforeCreate、created、beforeMount，当子组件都完成之后，会把子组件先存起来，这儿有队列，不是子完成就会调用子的mounted，因为子组件中可能还有子组件，这时会暂存一下，到最后子全完成了会按照子调父的调，mounted是先子后父。</p>
+</li>
+<li><p>源码：在dom渲染和更新时就会调用patch方法，在patch方法中有一个insertedVnodeQueue数组，会将所有的vnode存放在insertedVnodeQueue中，最后会在整个创建完之后会调用invokeInsertHook方法，依次调用收集的insert hook。在patch中会调用createElm方法来创建元素，createElm方法中会对元素进行判断：如果元素是组件，会调用createComponent方法创建组件，调用组件的init方法渲染当前组件的内容，通过initComponent方法将pendingInsert插入到自己的insertedVnodeQueue中，然后将它置为null，最后会调用invokeCreateHooks方法将vnode存放在insertedVnodeQueue中；如果元素不是组件，会调用createChildren方法递归遍历子节点（子组件），createChildren方法中会再次调用createElm方法，直到元素不是一个组件时。</p>
+</li>
+<li><p>当所有组件都完成后，会调用invokeInsertHook方法，里面会循环通过insert方法依次调用收集的hook，在insert方法中就会触发mounted。<br><img src="https://img-blog.csdnimg.cn/20200903160917803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDcyMDg2,size_16,color_FFFFFF,t_70" alt="流程"></p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42072086/article/details/108385632">原文链接</a></p>
+<h3 id="为什么有mutation还要有action"><a href="#为什么有mutation还要有action" class="headerlink" title="为什么有mutation还要有action"></a>为什么有mutation还要有action</h3><ul>
+<li>Mutation 必须是同步函数一条重要的原则就是要记住 </li>
+</ul>
+<p>现在想象，我们正在 debug 一个 app 并且观察 devtool 中的 mutation 日志。每一条 mutation 被记录，devtools 都需要捕捉到前一状态和后一状态的快照。然而，在上面的例子中 mutation 中的异步函数中的回调让这不可能完成：因为当 mutation 触发的时候，回调函数还没有被调用，devtools 不知道什么时候回调函数实际上被调用——实质上任何在回调函数中进行的状态的改变都是不可追踪的。<br>今天被问得有点奇怪,说为什么有了action还要mutation…事实上action只是当一个延后提交mutation的方法,真正改数据的还是mutation.也就不存在,两者重复一说.</p>
 
     </div>
 
@@ -217,11 +230,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2021/04/28/vue-shop/" rel="next" title="vue_shop商城学习项目">
-      vue_shop商城学习项目 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/05/25/this/" rel="prev" title="词法作用域与'上下文'this的区别">
+      <i class="fa fa-chevron-left"></i> 词法作用域与'上下文'this的区别
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -280,6 +293,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%94%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">答案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89mutation%E8%BF%98%E8%A6%81%E6%9C%89action"><span class="nav-number">3.1.</span> <span class="nav-text">为什么有mutation还要有action</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

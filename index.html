@@ -147,6 +147,86 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://bigsnowballhehe.github.io/2021/05/26/vueLiftParent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ZWei Wu">
+      <meta itemprop="description" content="雪球的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snfzi">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/26/vueLiftParent/" class="post-title-link" itemprop="url">Vue父子组件生命周期加载顺序/mutation和action</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-05-26 18:37:56 / Modified: 11:28:54" itemprop="dateCreated datePublished" datetime="2021-05-26T18:37:56+00:00">2021-05-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天面试被问到一个问题,之前都没遇见过,问父子组件生命周期加载顺序,把我整懵了. </p>
+<h2 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h2><p><strong>1.加载渲染过程</strong><br>父beforeCreate-&gt;父created-&gt;父beforeMount-&gt;子beforeCreate-&gt;子created-&gt;子beforeMount- &gt;子mounted-&gt;父mounted</p>
+<p><strong>2.子组件更新过程</strong><br>父beforeUpdate-&gt;子beforeUpdate-&gt;子updated-&gt;父updated</p>
+<p><strong>3.父组件更新过程</strong><br>父beforeUpdate-&gt;父updated</p>
+<p><strong>4.销毁过程</strong><br>父beforeDestroy-&gt;子beforeDestroy-&gt;子destroyed-&gt;父destroyed</p>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>组件的调用顺序都是先父后子,渲染完成的顺序肯定是先子后父</p>
+<p>组件的销毁操作是先父后子，销毁完成的顺序是先子后父</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul>
+<li><p>当dom渲染时，会createElm创建元素，创建元素后会进行初始化，初始化组件的时候内部还有组件，会不停的去渲染，所以它的渲染顺序是先父后子，完成的顺序是先子后父。</p>
+</li>
+<li><p>dom渲染描述：先父组件要创建beforeCreate、created，父组件实例化完成后要挂载这个父组件beforeMount，挂载父组件的时候会调用父的render方法，渲染的时候发现里面有子组件，这时就会调用子组件的beforeCreate、created、beforeMount，当子组件都完成之后，会把子组件先存起来，这儿有队列，不是子完成就会调用子的mounted，因为子组件中可能还有子组件，这时会暂存一下，到最后子全完成了会按照子调父的调，mounted是先子后父。</p>
+</li>
+<li><p>源码：在dom渲染和更新时就会调用patch方法，在patch方法中有一个insertedVnodeQueue数组，会将所有的vnode存放在insertedVnodeQueue中，最后会在整个创建完之后会调用invokeInsertHook方法，依次调用收集的insert hook。在patch中会调用createElm方法来创建元素，createElm方法中会对元素进行判断：如果元素是组件，会调用createComponent方法创建组件，调用组件的init方法渲染当前组件的内容，通过initComponent方法将pendingInsert插入到自己的insertedVnodeQueue中，然后将它置为null，最后会调用invokeCreateHooks方法将vnode存放在insertedVnodeQueue中；如果元素不是组件，会调用createChildren方法递归遍历子节点（子组件），createChildren方法中会再次调用createElm方法，直到元素不是一个组件时。</p>
+</li>
+<li><p>当所有组件都完成后，会调用invokeInsertHook方法，里面会循环通过insert方法依次调用收集的hook，在insert方法中就会触发mounted。<br><img src="https://img-blog.csdnimg.cn/20200903160917803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMDcyMDg2,size_16,color_FFFFFF,t_70" alt="流程"></p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42072086/article/details/108385632">原文链接</a></p>
+<h3 id="为什么有mutation还要有action"><a href="#为什么有mutation还要有action" class="headerlink" title="为什么有mutation还要有action"></a>为什么有mutation还要有action</h3><ul>
+<li>Mutation 必须是同步函数一条重要的原则就是要记住 </li>
+</ul>
+<p>现在想象，我们正在 debug 一个 app 并且观察 devtool 中的 mutation 日志。每一条 mutation 被记录，devtools 都需要捕捉到前一状态和后一状态的快照。然而，在上面的例子中 mutation 中的异步函数中的回调让这不可能完成：因为当 mutation 触发的时候，回调函数还没有被调用，devtools 不知道什么时候回调函数实际上被调用——实质上任何在回调函数中进行的状态的改变都是不可追踪的。<br>今天被问得有点奇怪,说为什么有了action还要mutation…事实上action只是当一个延后提交mutation的方法,真正改数据的还是mutation.也就不存在,两者重复一说.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://bigsnowballhehe.github.io/2021/05/25/this/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -170,10 +250,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-05-25 17:21:13 / Modified: 09:30:54" itemprop="dateCreated datePublished" datetime="2021-05-25T17:21:13+00:00">2021-05-25</time>
+              <time title="Created: 2021-05-25 17:21:13" itemprop="dateCreated datePublished" datetime="2021-05-25T17:21:13+00:00">2021-05-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
+              </span>
 
           
 
@@ -249,7 +335,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
               </span>
 
           
@@ -314,7 +400,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
               </span>
 
           
@@ -380,7 +466,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
               </span>
 
           
@@ -447,7 +533,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
               </span>
 
           
@@ -513,7 +599,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
               </span>
 
           
@@ -583,7 +669,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
               </span>
 
           
@@ -650,7 +736,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-25 09:30:54" itemprop="dateModified" datetime="2021-05-25T09:30:54+00:00">2021-05-25</time>
+                <time title="Modified: 2021-05-26 11:28:54" itemprop="dateModified" datetime="2021-05-26T11:28:54+00:00">2021-05-26</time>
               </span>
 
           
@@ -750,7 +836,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
