@@ -365,5 +365,5 @@ module.exports = {
   mode: 'production',
 }
 ```
-[来源博客]{http://www.woc12138.com/article/45}
+[来源博客](http://www.woc12138.com/article/45)
 
